@@ -38,6 +38,10 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_DB=postgres
+      - HOST=db
+      - PORT=5432
+      - DEBUG=1
+      - SECRET_KEY=django-insecure-ij0j$ca!g$c-9p=9*dh#kv^p^#e%q6b#nrk1gtm4(r7b+3l_y*
 
     ports:
       - '8000:8000'
