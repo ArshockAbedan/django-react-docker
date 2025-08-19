@@ -8,3 +8,6 @@ pytz==2022.1
 sqlparse==0.4.1
 typing_extensions==4.1.1
 wincertstore==0.2
+dj-rest-auth
+django-allauth
+social-auth-app-django
