@@ -1,3 +1,5 @@
+
+
 import React, { useState } from 'react';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 
@@ -38,25 +40,29 @@ function LoginPage() {
 
   return (
     <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
-      <div className="login-container">
-        <h2>Login</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Email:</label>
-            <input type="email" name="email" value={email} onChange={e => setEmail(e.target.value)} required />
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh', background: '#f5f6fa' }}>
+        <div style={{ background: 'white', padding: '2rem 2.5rem', borderRadius: '12px', boxShadow: '0 2px 16px rgba(0,0,0,0.08)', minWidth: 340 }}>
+          <h2 style={{ textAlign: 'center', marginBottom: '1.5rem', color: '#222' }}>Login</h2>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <label style={{ fontWeight: 500 }}>Email</label>
+              <input type="email" name="email" value={email} onChange={e => setEmail(e.target.value)} required style={{ padding: 8, borderRadius: 4, border: '1px solid #ccc' }} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <label style={{ fontWeight: 500 }}>Password</label>
+              <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)} required style={{ padding: 8, borderRadius: 4, border: '1px solid #ccc' }} />
+            </div>
+            <button type="submit" style={{ background: '#007bff', color: 'white', border: 'none', borderRadius: 4, padding: '10px 0', fontWeight: 600, fontSize: 16, cursor: 'pointer' }}>Login</button>
+          </form>
+          <div style={{ margin: '1.5rem 0', textAlign: 'center', color: '#888' }}>or</div>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <GoogleLogin
+              onSuccess={handleGoogleLogin}
+              onError={() => setError('Google login failed')}
+            />
           </div>
-          <div>
-            <label>Password:</label>
-            <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)} required />
-          </div>
-          <button type="submit">Login</button>
-        </form>
-        <hr />
-        <GoogleLogin
-          onSuccess={handleGoogleLogin}
-          onError={() => setError('Google login failed')}
-        />
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+          {error && <p style={{ color: 'red', marginTop: 16, textAlign: 'center' }}>{error}</p>}
+        </div>
       </div>
     </GoogleOAuthProvider>
   );

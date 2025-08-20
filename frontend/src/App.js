@@ -1,30 +1,23 @@
+
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginPage from './LoginPage';
-import logo from './logo.svg';
+import RegisterPage from './RegisterPage';
+import Header from './Header';
 import './App.css';
 
 function App() {
   return (
     <Router>
+      <Header />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/" element={
           <div className="App">
-            <header className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
-              <p>
-                Edit <code>src/App.js</code> and save to reload.
-              </p>
-              <a
-                className="App-link"
-                href="https://reactjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Aref is Learning React
-              </a>
-            </header>
+            <h1>Welcome to My App</h1>
+            <p>This is the home page.</p>
           </div>
         } />
       </Routes>

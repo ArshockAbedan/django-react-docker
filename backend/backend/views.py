@@ -15,6 +15,8 @@ def send_some_data(request):
         "data": "Hello from django backend"
     })
 
+
+
 @csrf_exempt
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -25,8 +27,31 @@ def login_view(request):
     user = authenticate(username=email, password=password)
     if user:
         token, created = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key})
-    return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({
+            'token': token.key,
+            'options': ['login', 'register']
+        })
+    return Response({
+        'error': 'Invalid credentials',
+        'options': ['login', 'register']
+    }, status=status.HTTP_401_UNAUTHORIZED)
+
+
+# Registration endpoint
+from django.contrib.auth.models import User
+@csrf_exempt
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register_view(request):
+    data = request.data
+    email = data.get('email')
+    password = data.get('password')
+    if not email or not password:
+        return Response({'error': 'Email and password required'}, status=status.HTTP_400_BAD_REQUEST)
+    if User.objects.filter(username=email).exists():
+        return Response({'error': 'User already exists'}, status=status.HTTP_400_BAD_REQUEST)
+    user = User.objects.create_user(username=email, email=email, password=password)
+    return Response({'success': 'User registered successfully'})
 
 @csrf_exempt
 @api_view(['POST'])

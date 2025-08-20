@@ -1,24 +1,27 @@
+
 FROM python:3.8-alpine
 LABEL maintainer="abedjooy.com"
 
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
 
-# Create app directory
+# Install system dependencies for psycopg2 and Pillow
+RUN apk update && \
+    apk add --no-cache gcc musl-dev postgresql-dev python3-dev libffi-dev jpeg-dev zlib-dev
+
 WORKDIR /app/backend/
 
-# Install dependencies first for better caching
 COPY requirements.txt ./
 RUN pip install --upgrade pip && \
-    pip install -r requirements.txt && \
-    adduser --disabled-password --no-create-home app
+    pip install -r requirements.txt
 
-# Copy the rest of the code
+# Copy project files
 COPY . .
 
-EXPOSE 8000
+# Create non-root user
+RUN adduser --disabled-password --no-create-home app
 
-# Switch to non-root user for running the server
+EXPOSE 8080
+
 USER app
 
-CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]

@@ -1,0 +1,21 @@
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #282c34;
+  color: white;
+  padding: 1rem 2rem;
+}
+.main-header .app-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.main-header nav a {
+  color: #61dafb;
+  margin-left: 1rem;
+  text-decoration: none;
+  font-weight: 500;
+}
+.main-header nav a:hover {
+  text-decoration: underline;
+}

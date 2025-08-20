@@ -19,15 +19,11 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-
     ports:
       - '3000:3000'
-
     volumes:
       - ./frontend:/app/frontend
-
-    depends_on:
-      - backend
+    # Remove depends_on unless you want to wait for backend
 
   backend: 
     build: 
@@ -37,7 +33,7 @@ services:
       sh -c "python manage.py wait_for_db &&
              python manage.py makemigrations &&
              python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000"
+             python manage.py runserver 0.0.0.0:8080"
     env_file: .env
 
     environment:
@@ -50,7 +46,7 @@ services:
       - SECRET_KEY=${SECRET_KEY}
 
     ports:
-      - '8000:8000'
+      - '8080:8080'
 
     volumes:
       - ./backend:/app/backend
