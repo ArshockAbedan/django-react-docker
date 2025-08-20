@@ -33,6 +33,7 @@ services:
       sh -c "python manage.py wait_for_db &&
              python manage.py makemigrations &&
              python manage.py migrate &&
+             python manage.py create_initial_superuser &&
              python manage.py runserver 0.0.0.0:8080"
     env_file: .env
 
@@ -44,6 +45,9 @@ services:
       - PORT=${PORT}
       - DEBUG=${DEBUG}
       - SECRET_KEY=${SECRET_KEY}
+      - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
+      - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
+      - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
 
     ports:
       - '8080:8080'
